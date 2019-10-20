@@ -1,0 +1,3 @@
+[SHORT TERM]
+TODO: Timezone dropdown function which populates timezones based on input (NA, EU, APAC, LATAM)
+TODO: Invite Link Functionality from owner
