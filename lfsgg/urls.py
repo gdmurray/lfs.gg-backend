@@ -16,9 +16,20 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from django.conf.urls import url
+from rest_framework.schemas import get_schema_view
+from rest_framework_simplejwt.views import (
+    TokenObtainPairView,
+    TokenRefreshView,
+)
 
 urlpatterns = [
-    url(r'^', include('lfsgg.core.urls')),
-    url(r'^o/', include('oauth2_provider.urls', namespace='oauth2_provider')),
+    url(r'', include('lfsgg.core.urls')),
+    url(r'', include('lfsgg.scrims.urls')),
     path('admin/', admin.site.urls),
+
+    url(r'^api/$', get_schema_view()),
+    url(r'^api/auth/', include(
+        'rest_framework.urls', namespace='rest_framework')),
+    url(r'^api/auth/token/obtain/$', TokenObtainPairView.as_view()),
+    url(r'^api/auth/token/refresh/$', TokenRefreshView.as_view()),
 ]

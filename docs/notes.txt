@@ -1,0 +1,19 @@
+Social Auth
+https://github.com/st4lk/django-rest-social-auth
+
+
+# How to upload a file to s3 manually
+host = f"s3.{settings.AWS_S3_REGION_NAME}.amazonaws.com"
+connection = boto.connect_s3(
+    settings.AWS_ACCESS_KEY_ID,
+    settings.AWS_SECRET_ACCESS_KEY,
+    host=host,
+)
+
+bucket = connection.get_bucket(settings.AWS_STORAGE_BUCKET_NAME)
+key = boto.s3.key.Key(bucket)
+key.name = "scrims/" + filename
+print(key.name)
+key.set_contents_from_string(file.getvalue(),
+                             headers={"Content-Type": "image/png", 'x-amz-acl': 'authenticated-read'})
+url = key.generate_url(expires_in=1200, query_auth=True)

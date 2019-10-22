@@ -7,5 +7,5 @@ from django.contrib.auth.models import AbstractUser
 class User(AbstractUser):
     player = models.ForeignKey('teams.Player', null=True, on_delete=models.DO_NOTHING)
 
-    created = models.DateTimeField(auto_created=True)
-    updated = models.DateTimeField(auto_now=True)
+    created = models.DateTimeField(auto_now_add=True, null=True)
+    updated = models.DateTimeField(auto_now=True, null=True)

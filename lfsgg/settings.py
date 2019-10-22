@@ -56,12 +56,14 @@ INSTALLED_APPS = [
     'lfsgg.leagues',
 
     'storages',
-    'oauth2_provider',
+    'rest_framework',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -70,6 +72,8 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'lfsgg.urls'
+
+CORS_ORIGIN_ALLOW_ALL = True
 
 TEMPLATES = [
     {
@@ -123,6 +127,16 @@ AUTH_PASSWORD_VALIDATORS = [
 
 AUTH_USER_MODEL = "core.User"
 
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    ),
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+    ),
+}
+
 # Internationalization
 # https://docs.djangoproject.com/en/2.2/topics/i18n/
 
@@ -131,7 +145,7 @@ LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'UTC'
 
 DEFAULT_TZ = 'US/Eastern'
-
+# TIME_ZONE = DEFAULT_TZ
 USE_I18N = True
 
 USE_L10N = True
@@ -141,19 +155,23 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
-AWS_STORAGE_BUCKET_NAME = os.environ.get("AWS_BUCKET", "lfs-gg-dev")
+AWS_STORAGE_BUCKET_NAME = os.environ.get("AWS_BUCKET", "lfs-dev")
 AWS_S3_REGION_NAME = os.environ.get("AWS_REGION", 'us-east-2')
 AWS_ACCESS_KEY_ID = os.environ.get("AWS_ACCESS_KEY", )
 AWS_SECRET_ACCESS_KEY = os.environ.get("AWS_SECRET_ACCESS_KEY", )
-
+AWS_S3_SIGNATURE_VERSION = 's3v4'
 AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
 
 AWS_S3_OBJECT_PARAMETERS = {
     'CacheControl': 'max-age=86400',
 }
 
-AWS_LOCATION = 'static'
-STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-STATIC_URL = "https://%s/%s/" % (AWS_S3_CUSTOM_DOMAIN, AWS_LOCATION)
+AWS_DEFAULT_ACL = None
+AWS_STATIC_LOCATION = 'static'
+AWS_MEDIA_LOCATION = 'media'
+AWS_SCRIM_LOCATION = 'scrims'
+
+STATICFILES_STORAGE = 'lfsgg.storage_backends.StaticStorage'
+STATIC_URL = "https://%s/%s/" % (AWS_S3_CUSTOM_DOMAIN, AWS_STATIC_LOCATION)
 
 DEFAULT_FILE_STORAGE = 'lfsgg.storage_backends.MediaStorage'

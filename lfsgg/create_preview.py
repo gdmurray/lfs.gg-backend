@@ -39,11 +39,10 @@ scrims = [
 ]
 logo = Image.open("hawk.jpg", 'r')
 img_w, img_h = logo.size
-print(img_w, img_h)
 logo = logo.resize((LOGO_SIZE, LOGO_SIZE), Image.ANTIALIAS)
 left_l = math.ceil(len(scrims) / 2)
 right_l = math.floor(len(scrims) / 2)
-print(left_l, right_l)
+
 image.paste(logo, (DEFAULT_OFFSET, DEFAULT_OFFSET))
 
 draw.text((DEFAULT_OFFSET * 2 + LOGO_SIZE, 15), "WLU Esports - LFS", fill=(255, 255, 255), font=TITLE_FONT)

@@ -5,5 +5,6 @@ from django.conf.urls import url
 from .views import *
 
 urlpatterns = [
-    url(r'^api/echo/$', EchoView.as_view())
+    path('s/<uuid:uuid>', scrim_schedule_uuid),
+    path('s/<slug:slug>', scrim_schedule_slug),
 ]
