@@ -17,3 +17,6 @@ print(key.name)
 key.set_contents_from_string(file.getvalue(),
                              headers={"Content-Type": "image/png", 'x-amz-acl': 'authenticated-read'})
 url = key.generate_url(expires_in=1200, query_auth=True)
+
+# this seems cool?
+https://stackoverflow.com/questions/32968016/how-to-dynamically-load-reducers-for-code-splitting-in-a-redux-application

@@ -1,18 +1,23 @@
 from django.db import models
 from django.conf import settings
-from lfsgg.constants import Region, TIMEZONES, ManagementStatus, ManagementRole
+from lfsgg.constants import Region, TIMEZONES, ManagementStatus, ManagementRole, Platform
 from lfsgg.utils import caps_fmt
 from lfsgg.scrims.models import Schedule
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
+import uuid
+
 
 # Create your models here.
 class Team(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid1, editable=False)
     name = models.CharField(max_length=60, null=False)
     logo = models.FileField(null=True, blank=True)
     esl_link = models.URLField(max_length=200, null=True, blank=True)
     # Whether lfs or a user created it
+
+    slug = models.CharField(max_length=32, null=True, blank=True, unique=True)
     user_created = models.BooleanField(default=False)
     created_by = models.ForeignKey('core.User', null=True, on_delete=models.DO_NOTHING, blank=True)
 
@@ -28,8 +33,10 @@ class Team(models.Model):
 
 class TeamSettings(models.Model):
     team = models.OneToOneField(Team, on_delete=models.CASCADE, null=False)
+
     region = models.CharField(choices=Region.CHOICES, max_length=10, null=True)
     timezone = models.CharField(max_length=32, choices=TIMEZONES, null=True, blank=True)
+    platform = models.CharField(choices=Platform.CHOICES, default=Platform.PC, max_length=15, null=False, blank=False)
 
     has_pro = models.BooleanField(default=False)
     esl_sync_enabled = models.BooleanField(default=False)

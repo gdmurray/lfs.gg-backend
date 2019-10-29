@@ -5,6 +5,8 @@ from django.conf.urls import url
 from .views import *
 
 urlpatterns = [
-    path('s/<uuid:uuid>', scrim_schedule_uuid),
-    path('s/<slug:slug>', scrim_schedule_slug),
+    path('s/<slug:slug>', scrim_schedule_image),
+    path('api/scrims/<int:scrim_id>', ScrimView.as_view()),
+    path('api/scrims/', CreateScrimView.as_view()),
+    path('api/team/<slug:identifier>/calendar/scrims', TeamScrimsCalendarView.as_view())
 ]

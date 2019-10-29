@@ -26,13 +26,18 @@ def create_image(schedule):
 
     if team.logo:
         response = requests.get(team.logo.url)
-        logo = Image.open(BytesIO(response.content))
+        print(response)
+        print(response.content)
+        try:
+            logo = Image.open(BytesIO(response.content))
+        except OSError:
+            print("???, ", response)
+        else:
+            # TODO:  AUTOMATICALLY RESIZE THE LOGO TO 50x50
+            logo = logo.resize((IMG.LOGO_WIDTH, IMG.LOGO_HEIGHT), Image.ANTIALIAS)
+            image.paste(logo, cursor)
 
-        # TODO:  AUTOMATICALLY RESIZE THE LOGO TO 50x50
-        logo = logo.resize((IMG.LOGO_WIDTH, IMG.LOGO_HEIGHT), Image.ANTIALIAS)
-        image.paste(logo, cursor)
-
-        cursor = inc(cursor, x=(IMG.LOGO_WIDTH + IMG.TITLE_OFFSET))
+            cursor = inc(cursor, x=(IMG.LOGO_WIDTH + IMG.TITLE_OFFSET))
 
     draw.text(cursor, f"{team.name} - LFS", fill=IMG.BLACK, font=IMG.TITLE_FONT)
 

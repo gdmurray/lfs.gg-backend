@@ -23,7 +23,7 @@ class TeamSettingsInline(admin.StackedInline):
 
 class TeamAdmin(admin.ModelAdmin):
     list_display = ('name', 'active')
-    readonly_fields = ('created', 'updated', 'created_by')
+    readonly_fields = ('id', 'created', 'updated', 'created_by')
     inlines = (TeamSettingsInline, TeamManagementInline)
 
     def save_model(self, request, obj, form, change):

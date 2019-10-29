@@ -17,6 +17,17 @@ class Region:
     )
 
 
+class Platform:
+    XBOX = "XBOX"
+    PLAYSTATION = "PLAYSTATION"
+    PC = "PC"
+    CHOICES = (
+        (XBOX, "XBOX"),
+        (PLAYSTATION, "Playstation"),
+        (PC, "PC")
+    )
+
+
 class ManagementStatus:
     APPLIED = "APPLIED"  # Applied for management of team
     APPROVED = "APPROVED"  # Either staff or Owner approved
@@ -33,9 +44,11 @@ class ManagementStatus:
 class ManagementRole:
     OWNER = "OWNER"
     USER = "USER"
+    PLAYER = "PLAYER"
     CHOICES = (
         (OWNER, "Owner"),
-        (USER, "User")
+        (USER, "User"),
+        (PLAYER, "Player")
     )
 
 

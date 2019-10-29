@@ -1,5 +1,7 @@
 import pytz
 from django.conf import settings
+from uuid import UUID
+import uuid
 
 
 def caps_fmt(s):
@@ -15,4 +17,13 @@ def inc(c, x=0, y=0):
 
 def to_team_tz(dt, team):
     timezone = team.teamsettings.timezone if team.teamsettings.timezone else settings.DEFAULT_TZ
-    return dt.replace(tzinfo=pytz.timezone(timezone)).astimezone(pytz.timezone(timezone))
+    # print(timezone)
+    return dt.astimezone(pytz.timezone(timezone))
+
+
+def is_uuid_v1(identifier, version=1):
+    try:
+        uuid_obj = UUID(identifier, version=version)
+    except ValueError:
+        return False
+    return str(uuid_obj) == identifier
