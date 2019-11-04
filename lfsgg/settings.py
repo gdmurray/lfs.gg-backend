@@ -171,7 +171,20 @@ AWS_STATIC_LOCATION = 'static'
 AWS_MEDIA_LOCATION = 'media'
 AWS_SCRIM_LOCATION = 'scrims'
 
+AWS_SES_ACCESS_KEY_ID = os.environ.get('AWS_SES_ACCESS_KEY_ID')
+AWS_SES_SECRET_ACCESS_KEY = os.environ.get('AWS_SES_SECRET_ACCESS_KEY')
+AWS_SES_REGION = os.environ.get('AWS_SES_REGION', 'us-east-1')
+AWS_SES_REGION_ENDPOINT = 'email.us-east-1.amazonaws.com'
+
 STATICFILES_STORAGE = 'lfsgg.storage_backends.StaticStorage'
 STATIC_URL = "https://%s/%s/" % (AWS_S3_CUSTOM_DOMAIN, AWS_STATIC_LOCATION)
 
 DEFAULT_FILE_STORAGE = 'lfsgg.storage_backends.MediaStorage'
+
+EMAIL_HOST = 'smtp.zoho.com'
+EMAIL_HOST_USER = 'greg@lfs.gg'
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_USE_SSL = False
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
