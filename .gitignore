@@ -106,6 +106,7 @@ venv.bak/
 .mypy_cache/
 
 frontend/
+design/
 
 
 certs
@@ -118,3 +119,4 @@ ansible/vars
 postgres-values.yaml
 .secrets
 tmp/
+
