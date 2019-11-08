@@ -11,6 +11,9 @@ import os
 
 from django.core.wsgi import get_wsgi_application
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'lfsgg.settings')
-
+if os.environ.get("DJANGO_ENVIRONMENT", None) == "prod":
+    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'lfsgg.prod')
+else:
+    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'lfsgg.settings')
+    
 application = get_wsgi_application()

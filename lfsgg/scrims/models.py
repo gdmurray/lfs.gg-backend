@@ -60,7 +60,7 @@ class Schedule(models.Model):
     constant = models.BooleanField(default=True)
     scrims = models.ManyToManyField(Scrim, related_name='schedule_scrims')
 
-    thumbnail = models.ImageField(storage=ScrimStorage(), blank=True)
+    thumbnail = models.ImageField(storage=ScrimStorage(), blank=True, null=True)
     thumbnail_updated = models.DateTimeField(null=True)
 
     created = models.DateTimeField(auto_now_add=True, null=True)

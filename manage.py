@@ -5,7 +5,12 @@ import sys
 
 
 def main():
-    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'lfsgg.settings')
+    if os.environ.get("DJANGO_ENVIRONMENT", None) == "prod":
+        os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'lfsgg.prod')
+    else:
+        os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'lfsgg.settings')
+
+
     try:
         from django.core.management import execute_from_command_line
     except ImportError as exc:

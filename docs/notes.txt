@@ -20,3 +20,26 @@ url = key.generate_url(expires_in=1200, query_auth=True)
 
 # this seems cool?
 https://stackoverflow.com/questions/32968016/how-to-dynamically-load-reducers-for-code-splitting-in-a-redux-application
+
+
+# Middleware Decorator
+from django.utils.decorators import decorator_from_middleware
+
+# List of details?
+      <td align="left" style="color:#48545d;font-size:14px;line-height:24px; font-weight:600;">
+        <ul style="list-style: none; padding-left: 0; margin-top: 0; margin-bottom: 0;">
+            <li>
+              Location: Canada
+            </li>
+            <li>
+              IP Address: 174.94.40.235
+            </li>
+          <li>
+            Browser: Chrome (Mac)
+          </li>
+        </ul>
+      </td>
+
+https://opensource.com/article/18/9/open-source-log-aggregation-tools
+
+https://www.digitalocean.com/community/tutorials/how-to-automate-deployments-to-digitalocean-kubernetes-with-circleci

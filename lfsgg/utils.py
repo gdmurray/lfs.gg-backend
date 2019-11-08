@@ -1,7 +1,8 @@
 import pytz
+import re
 from django.conf import settings
 from uuid import UUID
-import uuid
+from django.utils.html import strip_tags
 
 
 def caps_fmt(s):
@@ -27,3 +28,10 @@ def is_uuid_v1(identifier, version=1):
     except ValueError:
         return False
     return str(uuid_obj) == identifier
+
+
+def textify(html):
+    # Remove html tags and continuous whitespaces
+    text_only = re.sub('[ \t]+', ' ', strip_tags(html))
+    # Strip single spaces in the beginning of each line
+    return text_only.replace('\n ', '\n').strip()

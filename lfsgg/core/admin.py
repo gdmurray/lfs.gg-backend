@@ -11,6 +11,7 @@ class MyUserChangeForm(UserChangeForm):
 
 class MyUserAdmin(UserAdmin):
     form = MyUserChangeForm
+    list_display = ('username', 'email', 'email_confirmed', 'is_staff')
     # inlines = (TwitchAccountInline, TwitterAccountInline)
 
 

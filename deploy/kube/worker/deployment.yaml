@@ -1,0 +1,27 @@
+apiVersion: apps/v1beta2
+kind: Deployment
+metadata:
+  name: celery-worker
+  labels:
+    app: celery-worker
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      pod: celery-worker
+    # app: celery-worker
+  template:
+    metadata:
+      labels:
+        pod: celery-worker
+    spec:
+      securityContext:
+        runAsUser: 1000
+      containers:
+        - name: celery-worker
+          image: gregmurray/lfsgg:$COMMIT_SHA1
+          imagePullPolicy: Always
+          command: ['celery', '-A', 'lfsgg', 'worker', '--loglevel=DEBUG']
+          envFrom:
+            - configMapRef:
+                name: django-config
