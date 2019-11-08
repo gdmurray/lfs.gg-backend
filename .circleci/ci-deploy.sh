@@ -9,7 +9,7 @@ export COMMIT_SHA1=$COMMIT_SHA1
 #  it's not possible to do in-place substitution, so we need to save the output to another file
 #  and overwrite the original with that one.
 # "beat" "flower"
-declare -a arr=("django" "worker" )
+declare -a arr=("django" "worker")
 for pod in "${arr[@]}"
 do
     envsubst <./deploy/kube/${pod}/deployment.yaml >./deploy/kube/${pod}/deployment.yaml.out
