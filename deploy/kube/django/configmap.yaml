@@ -1,0 +1,26 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: django-config
+data:
+  # Variables get filled on build by circleCI
+  # Core
+  SECRET_KEY: $SECRET_KEY
+
+  # S3 Config
+  AWS_ACCESS_KEY_ID: $AWS_ACCESS_KEY_ID
+  AWS_SECRET_ACCESS_KEY: $AWS_SECRET_ACCESS_KEY
+  AWS_REGION: $AWS_REGION
+  AWS_BUCKET: $AWS_BUCKET
+
+  # SES Config
+  AWS_SES_ACCESS_KEY_ID: $AWS_SES_ACCESS_KEY_ID
+  AWS_SES_SECRET_ACCESS_KEY: $AWS_SES_SECRET_ACCESS_KEY
+  AWS_SES_REGION: $AWS_SES_REGION
+
+  # Database Configs
+  DB_HOST: $DB_HOST
+  DB_NAME: $DB_NAME
+  DB_USER: $DB_USER
+  DB_PASS: $DB_PASS
+  DB_PORT: $DB_PORT

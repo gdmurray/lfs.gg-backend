@@ -27,12 +27,11 @@ set_envfile()
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '7pcoe2m35%p+l#^_jwp2p4x3=_hy8c!8pxdrj*e)b2za^n$t*7'
+SECRET_KEY = os.environ.get("SECRET_KEY", None)
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -58,6 +57,7 @@ INSTALLED_APPS = [
     'storages',
     'rest_framework',
     'corsheaders',
+    'django_user_agents',
 ]
 
 MIDDLEWARE = [
@@ -78,7 +78,7 @@ CORS_ORIGIN_ALLOW_ALL = True
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['templates'],
+        'DIRS': ['templates', './templates/'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -101,7 +101,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': os.environ.get('DB_NAME', 'postgres'),
         'HOST': os.environ.get('DB_HOST', 'postgres-postgresql'),
-        'PORT': 5432,
+        'PORT': os.environ.get('DB_PORT', 5432),
         'USER': os.environ.get('DB_USER', 'gregmurray'),
         'PASSWORD': os.environ.get('DB_PASS', 'root'),
     }
@@ -155,6 +155,10 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static')
+]
+
 AWS_STORAGE_BUCKET_NAME = os.environ.get("AWS_BUCKET", "lfs-dev")
 AWS_S3_REGION_NAME = os.environ.get("AWS_REGION", 'us-east-2')
 AWS_ACCESS_KEY_ID = os.environ.get("AWS_ACCESS_KEY", )
@@ -171,20 +175,17 @@ AWS_STATIC_LOCATION = 'static'
 AWS_MEDIA_LOCATION = 'media'
 AWS_SCRIM_LOCATION = 'scrims'
 
-AWS_SES_ACCESS_KEY_ID = os.environ.get('AWS_SES_ACCESS_KEY_ID')
-AWS_SES_SECRET_ACCESS_KEY = os.environ.get('AWS_SES_SECRET_ACCESS_KEY')
-AWS_SES_REGION = os.environ.get('AWS_SES_REGION', 'us-east-1')
-AWS_SES_REGION_ENDPOINT = 'email.us-east-1.amazonaws.com'
-
 STATICFILES_STORAGE = 'lfsgg.storage_backends.StaticStorage'
 STATIC_URL = "https://%s/%s/" % (AWS_S3_CUSTOM_DOMAIN, AWS_STATIC_LOCATION)
 
 DEFAULT_FILE_STORAGE = 'lfsgg.storage_backends.MediaStorage'
 
-EMAIL_HOST = 'smtp.zoho.com'
-EMAIL_HOST_USER = 'greg@lfs.gg'
-EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
-EMAIL_USE_SSL = False
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+AWS_SES_ACCESS_KEY_ID = os.environ.get('AWS_SES_ACCESS_KEY_ID')
+AWS_SES_SECRET_ACCESS_KEY = os.environ.get('AWS_SES_SECRET_ACCESS_KEY')
+AWS_SES_REGION = os.environ.get('AWS_SES_REGION', 'us-east-1')
+AWS_SES_REGION_ENDPOINT = f'email.{AWS_SES_REGION}.amazonaws.com'
+
+EMAIL_BACKEND = 'django_amazon_ses.EmailBackend'
+
+FRONTEND_URL = "https://r6pl.com"
+BACKEND_URL = "https://api.r6pl.com"

@@ -22,7 +22,7 @@ class TeamSettingsInline(admin.StackedInline):
 
 
 class TeamAdmin(admin.ModelAdmin):
-    list_display = ('name', 'active')
+    list_display = ('name', 'active', 'game')
     readonly_fields = ('id', 'created', 'updated', 'created_by')
     inlines = (TeamSettingsInline, TeamManagementInline)
 

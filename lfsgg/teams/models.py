@@ -5,7 +5,7 @@ from lfsgg.utils import caps_fmt
 from lfsgg.scrims.models import Schedule
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-
+from lfsgg.core.models import Game
 import uuid
 
 
@@ -14,6 +14,8 @@ class Team(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid1, editable=False)
     name = models.CharField(max_length=60, null=False)
     logo = models.FileField(null=True, blank=True)
+
+    game = models.OneToOneField('core.Game', null=False, default=Game.default_game, on_delete=models.DO_NOTHING)
     esl_link = models.URLField(max_length=200, null=True, blank=True)
     # Whether lfs or a user created it
 
