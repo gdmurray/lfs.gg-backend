@@ -11,5 +11,10 @@ spec:
     # Name of a secret used to store the ACME account private key
     privateKeySecretRef:
       name: letsencrypt-prod
-    # Enable the HTTP-01 challenge provider
-    http01: {}
+    solvers:
+      - dns01:
+          cnameStrategy: Follow
+          digitalocean:
+            tokenSecretRef:
+              name: digitalocean-dns
+              key: access-token
