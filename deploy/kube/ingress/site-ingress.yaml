@@ -4,12 +4,12 @@ metadata:
   name: prod-ingress
   annotations:
     kubernetes.io/ingress.class: nginx
-    certmanager.k8s.io/cluster-issuer: letsencrypt-prod
+    certmanager.k8s.io/cluster-issuer: letsencrypt-staging
 spec:
   tls:
   - hosts:
-    - api.lfs.gg
-    secretName: letsencrypt-prod
+    - staging.lfs.gg
+    secretName: letsencrypt-staging
   rules:
   - host: api.lfs.gg
     http:

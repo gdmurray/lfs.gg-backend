@@ -43,3 +43,6 @@ from django.utils.decorators import decorator_from_middleware
 https://opensource.com/article/18/9/open-source-log-aggregation-tools
 
 https://www.digitalocean.com/community/tutorials/how-to-automate-deployments-to-digitalocean-kubernetes-with-circleci
+
+Fix Helm Tiller:
+https://github.com/helm/helm/issues/3130
