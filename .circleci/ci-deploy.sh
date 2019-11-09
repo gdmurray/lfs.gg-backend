@@ -13,7 +13,7 @@ declare -a arr=("django" "worker")
 for pod in "${arr[@]}"
 do
 
-    if [[ ! -f ./deploy/kube/${pod}/configmap.yaml ]]; then
+    if [[ -f ./deploy/kube/${pod}/configmap.yaml ]]; then
         envsubst <./deploy/kube/${pod}/configmap.yaml >./deploy/kube/${pod}/configmap.yaml.out
         mv ./deploy/kube/${pod}/configmap.yaml.out ./deploy/kube/${pod}/configmap.yaml
     fi
