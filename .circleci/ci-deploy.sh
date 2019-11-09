@@ -12,6 +12,12 @@ export COMMIT_SHA1=$COMMIT_SHA1
 declare -a arr=("django" "worker")
 for pod in "${arr[@]}"
 do
+
+    if [[ ! -f ./deploy/kube/${pod}/configmap.yaml ]]; then
+        envsubst <./deploy/kube/${pod}/configmap.yaml >./deploy/kube/${pod}/configmap.yaml.out
+        mv ./deploy/kube/${pod}/configmap.yaml.out ./deploy/kube/${pod}/configmap.yaml
+    fi
+
     envsubst <./deploy/kube/${pod}/deployment.yaml >./deploy/kube/${pod}/deployment.yaml.out
     mv ./deploy/kube/${pod}/deployment.yaml.out ./deploy/kube/${pod}/deployment.yaml
 
