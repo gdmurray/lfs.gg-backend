@@ -111,6 +111,8 @@ design/
 
 
 certs
+*.csr
+*.key
 .idea
 .DS_Store
 vars.yml
