@@ -8,7 +8,7 @@ ENV PYTHONDONTWRITEBYTECODE 1
 RUN pip install --upgrade pip
 
 RUN apk update \
-    && apk add libffi-dev openssl-dev libressl-dev jpeg-dev zlib-dev \
+    && apk add libffi-dev openssl-dev libressl-dev jpeg-dev zlib-dev freetype-dev \
     && apk add --upgrade make \
     && apk add --virtual build-deps \
     && apk add gcc python3-dev musl-dev \
