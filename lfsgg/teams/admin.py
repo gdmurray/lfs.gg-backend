@@ -1,5 +1,6 @@
 from django.contrib import admin
 from .models import Team, TeamManagement, TeamSettings
+from lfsgg.leagues.models import TeamLeague
 from logging import getLogger
 
 logger = getLogger(__name__)
@@ -12,10 +13,27 @@ class TeamManagementInline(admin.StackedInline):
     readonly_fields = ('created', 'updated', 'approved_by')
 
 
+class TeamLeagueInline(admin.TabularInline):
+    extra = 0
+    model = TeamLeague
+    fields = ('team', 'league', 'approved', 'approved_by', 'approved_on')
+    readonly_fields = ('approved_on',)
+
+
 class TeamSettingsInline(admin.StackedInline):
     extra = 0
     model = TeamSettings
-    fields = ('region', 'timezone', 'has_pro', 'esl_sync_enabled', 'created', 'updated')
+    fieldsets = (
+        (None, {
+            'fields': ('region', 'timezone', 'has_pro', 'esl_sync_enabled', 'created', 'updated')
+        }),
+        ('Other Team Settings', {
+            'fields': ('whitelist', 'blacklist')
+        }),
+        ('League Settings', {
+            'fields': ('open_to',)
+        })
+    )
     readonly_fields = ('created', 'updated')
     verbose_name_plural = 'Team Settings'
     verbose_name = 'Team Settings'
@@ -24,7 +42,7 @@ class TeamSettingsInline(admin.StackedInline):
 class TeamAdmin(admin.ModelAdmin):
     list_display = ('name', 'active', 'game')
     readonly_fields = ('id', 'created', 'updated', 'created_by')
-    inlines = (TeamSettingsInline, TeamManagementInline)
+    inlines = (TeamSettingsInline, TeamManagementInline, TeamLeagueInline)
 
     def save_model(self, request, obj, form, change):
         if not obj.id:

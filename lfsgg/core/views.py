@@ -54,19 +54,16 @@ def activate(request, uidb64, token):
         return HttpResponse('Activation link is invalid!')
 
 
-class EchoView(APIView):
-    def post(self, request, *args, **kwarg):
-        serializer = EchoSerializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        return Response(
-            serializer.data, status=status.HTTP_201_CREATED
-        )
-
-
 class UserDataView(APIView):
     def get(self, request, *args, **kwargs):
         serializer = UserDataSerializer(request.user, many=False)
         return Response(serializer.data, status=status.HTTP_200_OK)
+
+    def put(self, request, *args, **kwargs):
+        serializer = UserDataSerializer(request.user, data=request.data, partial=True)
+        if serializer.is_valid(raise_exception=True):
+            serializer.save()
+            return Response(status=200, data=serializer.data)
 
 
 def test_template(request):

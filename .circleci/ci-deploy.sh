@@ -9,6 +9,20 @@ export COMMIT_SHA1=$COMMIT_SHA1
 #  it's not possible to do in-place substitution, so we need to save the output to another file
 #  and overwrite the original with that one.
 # "beat" "flower"
+./kubectl \
+  --kubeconfig=/dev/null \
+  --server=$KUBERNETES_SERVER \
+  --certificate-authority=cert.crt \
+  --token=$KUBERNETES_TOKEN \
+  delete pod --field-selector=status.phase=Succeeded -l job-name=django-migrations
+
+./kubectl \
+  --kubeconfig=/dev/null \
+  --server=$KUBERNETES_SERVER \
+  --certificate-authority=cert.crt \
+  --token=$KUBERNETES_TOKEN \
+  delete job django-migrations
+
 declare -a arr=("django" "worker")
 for pod in "${arr[@]}"
 do

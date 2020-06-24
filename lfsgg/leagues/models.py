@@ -30,8 +30,8 @@ class LeagueRequest(models.Model):
 
 class League(models.Model):
     name = models.CharField(max_length=60, null=False)
-    logo = models.FileField(null=True)
-    url = models.URLField(max_length=250, null=True)
+    logo = models.FileField(null=True, blank=True)
+    url = models.URLField(max_length=250, null=True, blank=True)
     official = models.BooleanField(default=False)
 
     open = models.BooleanField(default=True)
@@ -56,7 +56,7 @@ class TeamLeague(models.Model):
     """
     M2M Through Table connecting Teams to Leagues,
     """
-    team = models.ForeignKey('teams.TeamSettings', on_delete=models.CASCADE)
+    team = models.ForeignKey('teams.Team', on_delete=models.CASCADE)
     league = models.ForeignKey(League, on_delete=models.DO_NOTHING)
 
     approved = models.BooleanField(default=False)

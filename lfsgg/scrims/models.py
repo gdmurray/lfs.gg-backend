@@ -33,7 +33,7 @@ class Scrim(models.Model):
     origin_team = models.ForeignKey('teams.Team', related_name='origin_team', null=False, on_delete=models.CASCADE)
     secondary_team = models.ForeignKey('teams.Team', related_name='secondary_team', null=True,
                                        on_delete=models.DO_NOTHING, blank=True)
-
+    uuid = models.UUIDField(default=uuid.uuid1, editable=False, unique=True)
     created_by = models.ForeignKey('core.User', related_name='created_by', on_delete=models.DO_NOTHING, blank=True)
     status = models.CharField(choices=STATUS_CHOICES, max_length=12)
     request_notes = models.CharField(max_length=30, null=True, blank=True)
@@ -52,6 +52,34 @@ class Scrim(models.Model):
         return f"{self.origin_team.name}: {self.status} - {self.get_time().strftime('%m/%d %H:%M')}"
 
     # todo write function to automatically close scrims 1 day later
+
+
+class ScrimRequest(models.Model):
+    """
+    The model which handles a request object for a scrim
+    """
+    PENDING = "PENDING"
+    ACCEPTED = "ACCEPTED"
+    DECLINED = "DECLINED"
+    STATUS_CHOICES = (
+        (PENDING, "Pending"),
+        (ACCEPTED, "Accepted"),
+        (DECLINED, "Declined")
+    )
+
+    scrim = models.ForeignKey(Scrim, on_delete=models.DO_NOTHING, null=False)
+
+    status = models.CharField(max_length=12, choices=STATUS_CHOICES, null=False, default=PENDING)
+
+    sender_team = models.ForeignKey('teams.Team', related_name='sender_team', null=False, on_delete=models.DO_NOTHING)
+    receiver_team = models.ForeignKey('teams.Team', related_name='receiver_team', null=True, blank=True,
+                                      on_delete=models.DO_NOTHING)
+    request_notes = models.CharField(max_length=120, null=True, blank=True)
+
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
+
+
 
 
 class Schedule(models.Model):

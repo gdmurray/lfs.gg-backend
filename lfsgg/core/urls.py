@@ -7,7 +7,6 @@ from lfsgg.mail import AWSBounceHandler, AWSComplaintHandler
 from django.contrib.auth import views as auth_views
 
 urlpatterns = [
-    url(r'^api/echo/$', EchoView.as_view()),
     url(r'^api/user/$', UserDataView.as_view()),
     url(r'^api/user/register/$', RegisterView.as_view(), name='register-user'),
 

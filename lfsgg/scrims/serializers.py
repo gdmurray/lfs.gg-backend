@@ -10,7 +10,7 @@ class ScheduleTwitterSerializer(serializers.ModelSerializer):
     def get_thumbnail(self, obj):
         if not obj.thumbnail:
             return obj.generate_image()
-        print(obj.thumbnail.url)
+
         return obj.thumbnail.url
 
     def get_team_name(self, obj):
@@ -28,8 +28,12 @@ class CondensedScrimSerializer(serializers.ModelSerializer):
         return obj.get_time()
 
     class Meta:
-        fields = ('id', 'secondary_team', 'status', 'request_notes', 'time')
+        fields = ('id', 'uuid', 'secondary_team', 'status', 'request_notes', 'time')
         model = Scrim
+
+class ScrimDetailSerializer(serializers.ModelSerializer):
+    class Meta:
+        fields = ('id', 'uuid', 'status', 'origin_team', 'secondary_team', '')
 
 class ScrimCalendarSerializer(serializers.ModelSerializer):
     title = serializers.SerializerMethodField()
@@ -71,3 +75,4 @@ class ScrimCalendarSerializer(serializers.ModelSerializer):
     class Meta:
         model = Scrim
         fields = ('id', 'title', 'extendedProps', 'textColor', 'backgroundColor', 'start', 'end', 'allDay')
+

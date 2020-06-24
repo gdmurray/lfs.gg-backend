@@ -1,0 +1,22 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: django-migrations
+  labels:
+    role: migrate
+spec:
+
+  ttlSecondsAfterFinished: 100
+  template:
+    spec:
+      containers:
+        - name: django
+          image: gregmurray/lfsgg
+          command: ["/bin/sh","-c"]
+          args: ["python3 manage.py migrate; python3 manage.py collectstatic --noinput"]
+          # args: ['python3', 'manage.py', 'migrate','', 'python3','manage.py', 'collectstatic','--noinput']
+          envFrom:
+            - configMapRef:
+                name: django-config
+      restartPolicy: Never
+  backoffLimit: 5

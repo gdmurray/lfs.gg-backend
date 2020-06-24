@@ -46,3 +46,11 @@ https://www.digitalocean.com/community/tutorials/how-to-automate-deployments-to-
 
 Fix Helm Tiller:
 https://github.com/helm/helm/issues/3130
+
+# AWS in the Future
+https://medium.com/@markgituma/kubernetes-local-to-production-with-django-5-deploy-to-aws-using-kops-with-rds-postgres-6f913bcab622
+
+https://dev.to/briancaffey/setting-up-a-django-project-in-kubernetes-with-minikube-3k8i
+
+# Get Token Secret
+kubectl -n kubernetes-dashboard describe secret $(kubectl -n kubernetes-dashboard get secret | grep greg | awk '{print $1}')

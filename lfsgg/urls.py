@@ -25,6 +25,7 @@ from rest_framework_simplejwt.views import (
 urlpatterns = [
     url(r'', include('lfsgg.core.urls')),
     url(r'', include('lfsgg.scrims.urls')),
+    url(r'', include('lfsgg.teams.urls')),
     path('admin/', admin.site.urls),
 
     url(r'^api/$', get_schema_view()),

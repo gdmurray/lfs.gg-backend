@@ -6,8 +6,9 @@ from lfsgg.storage_backends import MediaStorage
 # Create your models here.
 
 class User(AbstractUser):
-    player = models.ForeignKey('teams.Player', null=True, on_delete=models.DO_NOTHING)
+    player = models.ForeignKey('teams.Player', related_name='user_player', null=True, on_delete=models.DO_NOTHING)
 
+    active_team = models.ForeignKey('teams.Team', null=True, on_delete=models.DO_NOTHING)
     email_confirmed = models.BooleanField(default=False)
     created = models.DateTimeField(auto_now_add=True, null=True)
     updated = models.DateTimeField(auto_now=True, null=True)
@@ -27,4 +28,7 @@ class Game(models.Model):
         return dg.id
 
     def __str__(self):
+        return self.name
+
+    def __repr__(self):
         return self.name
